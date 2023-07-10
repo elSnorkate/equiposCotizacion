@@ -1,0 +1,87 @@
+@font-face {
+    font-family: general;
+    src: url(../media/fonts/Futura\ Bk\ BT.ttf);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: general;    
+}
+
+body {
+    background: white;
+    padding: 0 10px;
+}
+
+.wrapper {
+    max-width: 500px;
+    width: 100%;
+    background: whitesmoke;
+    margin: 20px auto;
+    padding: 30px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.125);
+}
+
+.wrapper .title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #15a2e4;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.wrapper .form .input_field {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.wrapper .form .input_field label {
+    width: 20%;
+    color: black;
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.wrapper .form .input_field .input,
+.wrapper .form .input_field .textarea {
+    width: 100%;
+    outline: none;
+    border: 1px solid;
+    font-size: 15px;
+    padding: 8px 10px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.wrapper .form .input_field .textarea {
+    resize: none;
+    height: 125px;
+}
+
+.wrapper .form .input_field .btn {
+    width: 50%;
+    padding: 8px 10px;
+    font-size: 15px;
+    border: 0;
+    background: #FAAE02;
+    color: black;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    text-align: center;
+}
+
+.wrapper .form .input_field:last-child {
+    margin-bottom: 0;
+}
+
+.wrapper .form .input_field .btn:hover {
+    background-color: #FAAE02;
+}
+
+#rsocialInput {
+    text-transform: capitalize;
+}

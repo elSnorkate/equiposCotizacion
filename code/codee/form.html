@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipos cotizacion</title>
+    <link rel="stylesheet" href="form_styles.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="title">
+            Cotizacion de Equipos
+        </div>
+        <div class="form">
+            <form action="pdf.html" method="GET"  target="_blank">
+                <div class="input_field">
+                    <label>Cliente:</label>
+                    <input type="text" class="input" name="clienteInput" id="clienteInput" >
+                </div>
+                <div class="input_field" >
+                    <label>Fecha de inicio de cotizacion:</label>
+                    <input type="date" class="input" name="inicioInput" id="inicioInput">
+                </div>
+                <div class="input_field" >
+                    <label>Fecha de fin de cotizacion:</label>
+                    <input type="date" class="input" name="vencimientoInput" id="vencimientoInput">
+                </div>
+                <div class="input_field">
+                    <label>Concepto</label>
+                    <input type="text" class="input" name="conceptos_1" id="conceptos_1">
+                    <label>...Precio:</label>
+                    <input type="number" min="1" step="any"  class="input" name="precio1" id="precio1">
+                </div>  
+                <div class="input_field">
+                    <label>Concepto</label>
+                    <input type="text" class="input" name="conceptos_2" id="conceptos_2">
+                    <label>...Precio:</label>
+                    <input type="number" min="1" step="any"  class="input" name="precio2" id="precio2">
+                  </div>
+                <div class="input_field">
+                    <label>Concepto</label>
+                    <input type="text" class="input" name="conceptos_3" id="conceptos_3">
+                    <label>...Precio: </label>
+                    <input type="number" min="1" step="any"  class="input" name="precio3" id="precio3">
+                  </div>
+                <div class="input_field">
+                    <label>Concepto</label>
+                    <input type="text" class="input" name="conceptos_4" id="conceptos_4">
+                    <label>...Precio:</label>
+                    <input type="number" min="1" step="any"  class="input" name="precio4" id="precio4">
+                  </div>              
+                <div class="input_field">
+                    <label>Concepto</label>
+                    <input type="text" class="input" name="conceptos_5" id="conceptos_5">
+                    <label>...Precio:</label>
+                    <input type="number"  min="1" step="any" class="input" name="precio5" id="precio5">
+                  </div>
+                  
+                <div class="input_field" id="originalDiv">
+                    <label>Concepto</label>
+                    <input type="text" class="input" name="conceptos_6" id="conceptos_6">
+                    <label>...Precio:</label>
+                    <input type="number" min="1" step="any"  class="input" name="precio6" id="precio6">
+                  </div>
+                  
+                <div id="containerDiv">
+                    <!-- Newly created divs will be appended here -->
+                </div> <br>
+                <div class="input_field" id="descuentoInput">
+                    <label>Descuento</label>
+                    <input type="number" min="1" step="any"  class="input" name="descuentoInput" >
+                </div>
+                <button id="creatediv" type="button" onclick="createNewDiv()">+</button> <br><br>
+                <div class="inputfield">
+                    <input type="submit" value="Generar PDF" class="btn" id="generate-pdf-btn">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script>
+function createNewDiv() {
+  // Get the original div
+  var originalDiv = document.getElementById('originalDiv');
+
+  // Clone the original div
+  var clonedDiv = originalDiv.cloneNode(true);
+
+  // Generate a unique ID for the new div
+  var newDivId = 'newDiv' + Date.now();
+
+  // Set the ID of the new div
+  clonedDiv.setAttribute('id', newDivId);
+
+  // Append the cloned div to the container div
+  var containerDiv = document.getElementById('containerDiv');
+  containerDiv.appendChild(clonedDiv);
+} 
+
+function sendValuesToPDF(event) {
+    event.preventDefault(); 
+
+    var cliente = document.getElementById("clienteInput").querySelector("input").value;
+    var inicio = document.getElementById("inicioInput").querySelector("input").value;
+    var vencimiento = document.getElementById("vencimientoInput").querySelector("input").value;
+    var conceptos_1 = document.getElementById("conceptos_1").querySelector("input").value;
+    var precio1 = document.getElementById("precio1").querySelector("input").value;
+    var conceptos_2 = document.getElementById("conceptos_2").querySelector("input").value;
+    var precio2 = document.getElementById("precio2").querySelector("input").value;
+    var conceptos_3 = document.getElementById("conceptos_3").querySelector("input").value;
+    var precio3 = document.getElementById("precio3").querySelector("input").value;
+    var conceptos_4 = document.getElementById("conceptos_4").querySelector("input").value;
+    var precio4 = document.getElementById("precio4").querySelector("input").value;
+    var conceptos_5 = document.getElementById("conceptos_5").querySelector("input").value;
+    var precio5 = document.getElementById("precio5").querySelector("input").value;
+    var conceptos_6 = document.getElementById("conceptos_6").querySelector("input").value;
+    var precio6 = document.getElementById("precio6").querySelector("input").value;
+    var descuento = document.getElementById("descuentoInput").querySelector("input").value;
+    
+    
+    var pdf = new jsPDF();
+
+    pdf.text("Cliente: " + cliente, 10, 20);
+    pdf.text("Fecha de cotizacion: " + inicio, 10, 30);
+    pdf.text("Fecha de vencimiento: " + vencimiento, 10, 40);
+    pdf.text("Concepto" + conceptos_1, 10, 50);
+    pdf.text("Concepto" + conceptos_2, 10, 60);
+    pdf.text("Concepto" + conceptos_3, 10, 70);
+    pdf.text("Concepto" + conceptos_4, 10, 80);
+    pdf.text("Concepto" + conceptos_5, 10, 90);
+    pdf.text("Concepto" + conceptos_6, 10, 100);
+    pdf.text("precio" + precio1, 10, 110);
+    pdf.text("precio" + precio2, 10, 120);
+    pdf.text("precio" + precio3, 10, 130);
+    pdf.text("precio" + precio4, 10, 140);
+    pdf.text("precio" + precio5, 10, 150);
+    pdf.text("precio" + precio6, 10, 160);
+    pdf.text("descuento" + descuento, 10, 170);
+
+    pdf.save("cotizacion.pdf");
+}
+</script>
+</html>

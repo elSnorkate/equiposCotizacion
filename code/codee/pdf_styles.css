@@ -1,0 +1,64 @@
+*{
+    font-family: general;
+}
+    h1{
+        color: #2783C5;
+    }
+    img{
+        align-content: end;
+    }
+    .title-with-image {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+      
+      .title-with-image img {
+        width: 100px; /* Adjust the width as needed */
+        height: auto; /* Maintain the aspect ratio */
+    }
+    .container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+    }
+      
+      table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+      
+      th,
+      td {
+        border: 1px solid #3F91CB;
+        padding: 10px;
+        height: 25px;
+    }
+      
+      .table1 {
+        width: 75%;
+    }
+      
+      .table2 {
+        width: 25%;
+    }
+    .excep{
+        text-align: right;
+        font-weight: bold;
+    }
+    #descuentos {
+        color: red;
+    }
+    tbody tr.head {
+        page-break-before: always;
+        page-break-inside: avoid;
+    }
+    @media print {
+        body {
+            -webkit-print-color-adjust: exact;
+        }
+    }
+    @font-face {
+        font-family: general;
+        src: url(../media/fonts/Futura\ Bk\ BT.ttf);
+    }
