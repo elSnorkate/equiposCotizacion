@@ -8,12 +8,16 @@
 </head>
 <body>
     <div class="title-with-image">
-    <h1>Cotizacion Suministros 2023-28</h1>
+    <h1>Cotizacion Suministros 2023</h1>
     <img src="../media/img/1.png" alt="logo">
     </div>
     <table style="border: hidden;">
     <tr style="border: hidden;">
         <td><strong>RUC:</strong></td>
+        <td style="border: hidden;"><span style="color: black;" id="rucInput"></span></td>
+    </tr>
+    <tr style="border: hidden;">
+        <td><strong>Cliente:</strong></td>
         <td style="border: hidden;"><span style="color: black;" id="clienteInput"></span></td>
     </tr>
     <tr style="border: hidden;">
@@ -72,109 +76,87 @@
         </table>
       </div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-      <script>
-        function getQueryParams() {
-          var params = {};
-          var query = window.location.search.substring(1);
-          var vars = query.split('&');
-          for (var i = 0; i < vars.length; i++) {
-            var pair = vars[i].split('=');
-            params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
-          }
-          return params;
-        }
-      
-        function createNewRow() {
-          var queryParams = getQueryParams();
-          var itemCount = Object.keys(queryParams).filter(key => key.startsWith('conceptos_')).length;
-      
-          var conceptosTableBody = document.getElementById('conceptosTableBody');
-          var preciosTableBody = document.getElementById('preciosTableBody');
-      
-          var conceptoRow = document.createElement('tr');
-          var precioRow = document.createElement('tr');
-      
-          var conceptoCell = document.createElement('td');
-          var precioCell = document.createElement('td');
-      
-          conceptoCell.textContent = '🟠 ' + queryParams['conceptos_' + itemCount];
-          precioCell.textContent = 'S/. ' + queryParams['precio' + itemCount];
-      
-          conceptoRow.appendChild(conceptoCell);
-          precioRow.appendChild(precioCell);
-      
-          conceptosTableBody.appendChild(conceptoRow);
-          preciosTableBody.appendChild(precioRow);
-      
-          // Calculate Subtotal
-          var subtotal = 0;
-          var preciosTableRows = preciosTableBody.getElementsByTagName('tr');
-          for (var i = 0; i < preciosTableRows.length; i++) {
-            var precioText = preciosTableRows[i].textContent.trim().substring(3);
-            var precio = parseFloat(precioText) || 0;
-            subtotal += precio;
-          }
-      
-          document.getElementById('subtotal').textContent = subtotal.toFixed(2);
-      
-          // Apply Discount and Calculate Total
-          var discount = parseFloat(queryParams.descuentoInput) || 0;
-          var total = subtotal - discount;
-      
-          document.getElementById('descuentoInput').textContent = discount.toFixed(2);
-          document.getElementById('totalInput').textContent = total.toFixed(2);
-        }
-      
-        // Retrieve query parameters and populate the PDF template
-        var queryParams = getQueryParams();
-        var cliente = queryParams.clienteInput || '';
-        document.getElementById('clienteInput').innerHTML = cliente;
-        document.getElementById('inicioInput').textContent = queryParams.inicioInput || '';
-        document.getElementById('vencimientoInput').textContent = queryParams.vencimientoInput || '';
-      
-        // Generate rows based on existing conceptos and precios query parameters
-        var itemCount = Object.keys(queryParams).filter(key => key.startsWith('conceptos_')).length;
-        for (var i = 1; i <= itemCount; i++) {
-          var concepto = queryParams['conceptos_' + i];
-          var precio = queryParams['precio' + i];
-      
-          var conceptosTableBody = document.getElementById('conceptosTableBody');
-          var preciosTableBody = document.getElementById('preciosTableBody');
-      
-          var conceptoRow = document.createElement('tr');
-          var precioRow = document.createElement('tr');
-      
-          var conceptoCell = document.createElement('td');
-          var precioCell = document.createElement('td');
-      
-          conceptoCell.textContent = '🟠 ' + concepto;
-          precioCell.textContent = 'S/. ' + precio;
-      
-          conceptoRow.appendChild(conceptoCell);
-          precioRow.appendChild(precioCell);
-      
-          conceptosTableBody.appendChild(conceptoRow);
-          preciosTableBody.appendChild(precioRow);
-        }
-      
-        // Calculate Subtotal
-        var subtotal = 0;
-        var preciosTableRows = document.getElementById('preciosTableBody').getElementsByTagName('tr');
-        for (var i = 0; i < preciosTableRows.length; i++) {
-          var precioText = preciosTableRows[i].textContent.trim().substring(3);
-          var precio = parseFloat(precioText) || 0;
-          subtotal += precio;
-        }
-      
-        document.getElementById('subtotal').textContent = subtotal.toFixed(2);
-      
-        // Apply Discount and Calculate Total
-        var discount = parseFloat(queryParams.descuentoInput) || 0;
-        var total = subtotal - discount;
-      
-        document.getElementById('descuentoInput').textContent = discount.toFixed(2);
-        document.getElementById('totalInput').textContent = total.toFixed(2);
-      </script>
-      
+<script>
+function getQueryParams() {
+  var params = {};
+  var query = window.location.search.substring(1);
+  var pairs = query.split('&');
+  for (var i = 0; i < pairs.length; i++) {
+    var pair = pairs[i].split('=');
+    var name = decodeURIComponent(pair[0]);
+    var value = decodeURIComponent(pair[1]);
+    params[name] = value;
+  }
+  return params;
+}
+
+// Retrieve query parameters and populate the PDF template
+var queryParams = getQueryParams();
+var ruc = queryParams.rucInput || '';
+var cliente = queryParams.clienteInput || '';
+document.getElementById('rucInput').textContent = ruc;
+document.getElementById('clienteInput').textContent = cliente;
+document.getElementById('inicioInput').textContent = queryParams.inicioInput || '';
+document.getElementById('vencimientoInput').textContent = queryParams.vencimientoInput || '';
+
+// Generate rows based on existing conceptos and precios query parameters
+var itemCount = Object.keys(queryParams).filter(function(key) {
+  return key.startsWith('conceptos_');
+}).length;
+for (var i = 1; i <= itemCount; i++) {
+  var concepto = queryParams['conceptos_' + i];
+  var precio = queryParams['precio' + i];
+
+  var conceptosTableBody = document.getElementById('conceptosTableBody');
+  var preciosTableBody = document.getElementById('preciosTableBody');
+
+  var conceptoRow = document.createElement('tr');
+  var precioRow = document.createElement('tr');
+
+  var conceptoCell = document.createElement('td');
+  var precioCell = document.createElement('td');
+
+  conceptoCell.textContent = '🟠' + concepto;
+  precioCell.textContent = 'S/. ' + (Number.isInteger(parseFloat(precio)) ? precio + '.00' : precio);
+
+  conceptoRow.appendChild(conceptoCell);
+  precioRow.appendChild(precioCell);
+
+  conceptosTableBody.appendChild(conceptoRow);
+  preciosTableBody.appendChild(precioRow);
+}
+
+// Calculate Subtotal
+var subtotal = 0;
+var preciosTableRows = document.getElementById('preciosTableBody').getElementsByTagName('tr');
+for (var j = 0; j < preciosTableRows.length; j++) {
+  var precioText = preciosTableRows[j].textContent.trim().substring(3);
+  var precioValue = parseFloat(precioText) || 0;
+  subtotal += precioValue;
+}
+
+document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+
+// Apply Discount and Calculate Total
+var discount = parseFloat(queryParams.descuentoInput) || 0;
+var total = subtotal - discount;
+
+document.getElementById('descuentoInput').textContent = discount.toFixed(2);
+document.getElementById('totalInput').textContent = total.toFixed(2);
+
+function replacePlusSymbols() {
+  var tdElements = document.getElementsByTagName('td');
+  for (var i = 0; i < tdElements.length; i++) {
+    var td = tdElements[i];
+    var text = td.textContent;
+    if (text.includes('+')) {
+      td.innerHTML = text.replace(/\+/g, '&nbsp;');
+    }
+  }
+}
+
+// Call the function to replace the "+" symbols with non-breaking spaces
+replacePlusSymbols();
+</script>
 </body>
 </html>

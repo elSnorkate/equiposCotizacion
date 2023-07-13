@@ -16,7 +16,11 @@
       <form action="pdf.html" method="GET" target="_blank">
         <div class="input_field">
           <label>RUC :</label>
-          <input type="text" class="input" name="clienteInput" id="clienteInput" maxlength="11">
+          <input type="text" class="input" name="rucInput" id="rucInput" maxlength="11">
+        </div>
+        <div class="input_field">
+          <label>Cliente :</label>
+          <input type="text" class="input" name="clienteInput" id="clienteInput">
         </div>
         <div class="input_field">
           <label>Fecha de inicio de cotizacion:</label>
@@ -43,8 +47,8 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-  <script>
-    function addNewItem() {
+<script>
+function addNewItem() {
   var itemContainer = document.getElementById('itemContainer');
   var itemCount = itemContainer.childElementCount + 1;
 
@@ -71,14 +75,28 @@
   priceInput.name = 'precio' + itemCount;
   priceInput.id = 'precio' + itemCount;
 
+  var deleteButton = document.createElement('button');
+  deleteButton.type = 'button';
+  deleteButton.textContent =  '🗑️';
+  deleteButton.onclick = function() {
+    // Call the deleteItem function passing the itemDiv to be removed
+    deleteItem(newItemDiv);
+  };
+
   newItemDiv.appendChild(conceptLabel);
   newItemDiv.appendChild(conceptInput);
   newItemDiv.appendChild(priceLabel);
   newItemDiv.appendChild(priceInput);
+  newItemDiv.appendChild(deleteButton);
 
   itemContainer.appendChild(newItemDiv);
 }
 
-  </script>
+function deleteItem(itemDiv) {
+  var itemContainer = document.getElementById('itemContainer');
+  itemContainer.removeChild(itemDiv);
+}
+  
+</script>
 </body>
 </html>
