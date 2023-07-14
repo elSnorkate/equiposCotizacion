@@ -1,162 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>pdf</title>
-    <link rel="stylesheet" href="pdf_styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pdf</title>
+  <link rel="stylesheet" href="pdf_styles.css">
 </head>
 <body>
-    <div class="title-with-image">
-    <h1>Cotizacion Suministros 2023</h1>
+  <div class="title-with-image">
+    <h1>Cotizacion Suministros 2023-<span id="tit"></span></h1>
     <img src="../media/img/1.png" alt="logo">
-    </div>
-    <table style="border: hidden;">
+  </div>
+  <table style="border: hidden;">
     <tr style="border: hidden;">
-        <td><strong>RUC:</strong></td>
-        <td style="border: hidden;"><span style="color: black;" id="rucInput"></span></td>
+      <td><strong>RUC:</strong></td>
+      <td style="border: hidden;"><span style="color: black;" id="rucInput"></span></td>
     </tr>
     <tr style="border: hidden;">
-        <td><strong>Cliente:</strong></td>
-        <td style="border: hidden;"><span style="color: black;" id="clienteInput"></span></td>
+      <td><strong>Cliente:</strong></td>
+      <td style="border: hidden;"><span style="color: black;" id="clienteInput"></span></td>
     </tr>
     <tr style="border: hidden;">
-        <td><strong>Fecha de inicio de cotizacion:</strong></td>
-        <td style="border: hidden;"><span id="inicioInput"></span></td>
+      <td><strong>Fecha de inicio de cotizacion:</strong></td>
+      <td style="border: hidden;"><span id="inicioInput"></span></td>
     </tr>
     <tr style="border: hidden;">
-        <td><strong>Fecha de fin de cotizacion:</strong></td>
-        <td style="border: hidden;"><span id="vencimientoInput"></span></td>
+      <td><strong>Fecha de fin de cotizacion:</strong></td>
+      <td style="border: hidden;"><span id="vencimientoInput"></span></td>
     </tr>
+  </table>
+  <br> 
+  <h3>Precios:</h3>
+  <br>
+  <div class="container">
+    <table class="table1">
+      <thead>
+        <tr>
+          <th colspan="2" style="background-color: #2783C5; color: white; border-top-right-radius: 45px; border-top: none; border-left: none; border-right: none;">CONCEPTOS</th>
+        </tr>
+      </thead>
+      <tbody id="conceptosTableBody">
+        <!-- Dynamically generated rows will be inserted here -->
+      </tbody>
+      <tfoot>
+        <tr class="subtotalRow">
+          <td class="excep">SUB-TOTAL :</td>
+        </tr>
+        <tr class="discountRow">
+          <td class="excep" style="color: red;">Descuentos :</td>
+        </tr>
+        <tr class="totalRow">
+          <td class="excep" style="border: none; border-bottom: none; border-top-left-radius: 10px; border-bottom-right-radius: 10px;">TOTAL :</td>
+        </tr>
+      </tfoot>
     </table>
-    <br> <br>
-    <div class="container">
-        <table class="table1">
-          <thead>
-            <tr>
-              <th colspan="2" style="background-color: #2783C5; color: white; border-top-right-radius: 45px; border-top: none; border-left: none; border-right: none;">Concepto</th>
-            </tr>
-          </thead>
-          <tbody id="conceptosTableBody">
-            <!-- Dynamically generated rows will be inserted here -->
-          </tbody>
-          <tfoot>
-            <tr class="subtotalRow">
-              <td class="excep">SUB-TOTAL :</td>
-            </tr>
-            <tr class="discountRow">
-              <td class="excep" style="color: red;">Descuentos :</td>
-            </tr>
-            <tr class="totalRow">
-              <td class="excep" style="border: none; border-bottom: none; border-top-left-radius: 10px; border-bottom-right-radius: 10px;">TOTAL :</td>
-            </tr>
-          </tfoot>
-        </table>
-      
-        <table class="table2">
-          <thead>
-            <tr>
-              <th style="background-color: #2783C5; color: white; border-top-left-radius: 45px; border-top: none; border-left: none; border-right: none;">Precio</th>
-            </tr>
-          </thead>
-          <tbody id="preciosTableBody">
-            <!-- Dynamically generated rows will be inserted here -->
-          </tbody>
-          <tfoot>
-            <tr class="subtotalRow">
-              <td>S/. <span id="subtotal"></span></td>
-            </tr>
-            <tr class="discountRow">
-              <td style="color: red;">S/. <span id="descuentoInput"></span></td>
-            </tr>
-            <tr class="totalRow" style="background-color: #2783C5; color: white;" >
-              <td style="border-bottom-right-radius: 45px; border-right: none; border-bottom: none;">S/. <span id="totalInput"></span></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-<script>
-function getQueryParams() {
-  var params = {};
-  var query = window.location.search.substring(1);
-  var pairs = query.split('&');
-  for (var i = 0; i < pairs.length; i++) {
-    var pair = pairs[i].split('=');
-    var name = decodeURIComponent(pair[0]);
-    var value = decodeURIComponent(pair[1]);
-    params[name] = value;
-  }
-  return params;
-}
 
-// Retrieve query parameters and populate the PDF template
-var queryParams = getQueryParams();
-var ruc = queryParams.rucInput || '';
-var cliente = queryParams.clienteInput || '';
-document.getElementById('rucInput').textContent = ruc;
-document.getElementById('clienteInput').textContent = cliente;
-document.getElementById('inicioInput').textContent = queryParams.inicioInput || '';
-document.getElementById('vencimientoInput').textContent = queryParams.vencimientoInput || '';
+    <table class="table2">
+      <thead>
+        <tr>
+          <th style="background-color: #2783C5; color: white; border-top-left-radius: 45px; border-top: none; border-left: none; border-right: none;">PRECIOS</th>
+        </tr>
+      </thead>
+      <tbody id="preciosTableBody">
+        <!-- Dynamically generated rows will be inserted here -->
+      </tbody>
+      <tfoot>
+        <tr class="subtotalRow">
+          <td><strong> S/ <span id="subtotal"></span></strong></td>
+        </tr>
+        <tr class="discountRow">
+          <td style="color: red;"><strong>S/<span id="descuentoInput"></span></strong></td>
+        </tr>
+        <tr class="totalRow" style="background-color: #2783C5; color: white;" >
+          <td style="border-bottom-right-radius: 45px; border-right: none; border-bottom: none;"><strong>S/ <span id="totalInput"></span></strong></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
 
-// Generate rows based on existing conceptos and precios query parameters
-var itemCount = Object.keys(queryParams).filter(function(key) {
-  return key.startsWith('conceptos_');
-}).length;
-for (var i = 1; i <= itemCount; i++) {
-  var concepto = queryParams['conceptos_' + i];
-  var precio = queryParams['precio' + i];
-
-  var conceptosTableBody = document.getElementById('conceptosTableBody');
-  var preciosTableBody = document.getElementById('preciosTableBody');
-
-  var conceptoRow = document.createElement('tr');
-  var precioRow = document.createElement('tr');
-
-  var conceptoCell = document.createElement('td');
-  var precioCell = document.createElement('td');
-
-  conceptoCell.textContent = '🟠' + concepto;
-  precioCell.textContent = 'S/. ' + (Number.isInteger(parseFloat(precio)) ? precio + '.00' : precio);
-
-  conceptoRow.appendChild(conceptoCell);
-  precioRow.appendChild(precioCell);
-
-  conceptosTableBody.appendChild(conceptoRow);
-  preciosTableBody.appendChild(precioRow);
-}
-
-// Calculate Subtotal
-var subtotal = 0;
-var preciosTableRows = document.getElementById('preciosTableBody').getElementsByTagName('tr');
-for (var j = 0; j < preciosTableRows.length; j++) {
-  var precioText = preciosTableRows[j].textContent.trim().substring(3);
-  var precioValue = parseFloat(precioText) || 0;
-  subtotal += precioValue;
-}
-
-document.getElementById('subtotal').textContent = subtotal.toFixed(2);
-
-// Apply Discount and Calculate Total
-var discount = parseFloat(queryParams.descuentoInput) || 0;
-var total = subtotal - discount;
-
-document.getElementById('descuentoInput').textContent = discount.toFixed(2);
-document.getElementById('totalInput').textContent = total.toFixed(2);
-
-function replacePlusSymbols() {
-  var tdElements = document.getElementsByTagName('td');
-  for (var i = 0; i < tdElements.length; i++) {
-    var td = tdElements[i];
-    var text = td.textContent;
-    if (text.includes('+')) {
-      td.innerHTML = text.replace(/\+/g, '&nbsp;');
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script>
+    function getQueryParams() {
+      var params = {};
+      var query = window.location.search.substring(1);
+      var pairs = query.split('&');
+      for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i].split('=');
+        var name = decodeURIComponent(pair[0]);
+        var value = decodeURIComponent(pair[1]);
+        params[name] = value;
+      }
+      return params;
     }
-  }
-}
 
-// Call the function to replace the "+" symbols with non-breaking spaces
-replacePlusSymbols();
-</script>
+    // Retrieve query parameters and populate the PDF template
+    var queryParams = getQueryParams();
+    var ruc = queryParams.rucInput || '';
+    var cliente = queryParams.clienteInput || '';
+    var numero = queryParams.numeroInput || ''; // Fetch the 'numero' parameter
+    document.getElementById('rucInput').textContent = ruc;
+    document.getElementById('clienteInput').textContent = cliente;
+    document.getElementById('inicioInput').textContent = queryParams.inicioInput || '';
+    document.getElementById('vencimientoInput').textContent = queryParams.vencimientoInput || '';
+    document.getElementById('tit').textContent = numero; // Display 'numero' in the 'tit' span
+
+    // Generate rows based on existing conceptos and precios query parameters
+    var itemCount = Object.keys(queryParams).filter(function(key) {
+      return key.startsWith('conceptos_');
+    }).length;
+    for (var i = 1; i <= itemCount; i++) {
+      var concepto = queryParams['conceptos_' + i];
+      var precio = queryParams['precio' + i];
+
+      var conceptosTableBody = document.getElementById('conceptosTableBody');
+      var preciosTableBody = document.getElementById('preciosTableBody');
+
+      var conceptoRow = document.createElement('tr');
+      var precioRow = document.createElement('tr');
+
+      var conceptoCell = document.createElement('td');
+      var precioCell = document.createElement('td');
+
+      conceptoCell.innerHTML = '<span class="symbol">🟠</span> ' + concepto; // Apply symbol and class
+      precioCell.innerHTML = '<strong>S/ ' + (Number.isInteger(parseFloat(precio)) ? precio + '.00' : precio) + '</strong>';
+
+      conceptoRow.appendChild(conceptoCell);
+      precioRow.appendChild(precioCell);
+
+      conceptosTableBody.appendChild(conceptoRow);
+      preciosTableBody.appendChild(precioRow);
+    }
+
+    // Calculate Subtotal
+    var subtotal = 0;
+    var preciosTableRows = document.getElementById('preciosTableBody').getElementsByTagName('tr');
+    for (var j = 0; j < preciosTableRows.length; j++) {
+      var precioText = preciosTableRows[j].textContent.trim().substring(3);
+      var precioValue = parseFloat(precioText) || 0;
+      subtotal += precioValue;
+    }
+
+    document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+
+    // Apply Discount and Calculate Total
+    var discount = parseFloat(queryParams.descuentoInput) || 0;
+    var total = subtotal - discount;
+
+    document.getElementById('descuentoInput').textContent = discount.toFixed(2);
+    document.getElementById('totalInput').textContent = total.toFixed(2);
+
+    function replacePlusSymbols() {
+      var symbols = document.getElementsByClassName('symbol');
+      for (var i = 0; i < symbols.length; i++) {
+        var symbol = symbols[i];
+        symbol.style.fontSize = '9px';
+        symbol.style.opacity = '0.6';
+      }
+    }
+
+    // Call the function to apply styles to all symbols
+    replacePlusSymbols();
+  </script>
 </body>
 </html>

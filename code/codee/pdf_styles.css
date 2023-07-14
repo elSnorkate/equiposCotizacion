@@ -54,7 +54,8 @@ tbody tr.head {
     page-break-before: always;
     page-break-inside: avoid;
 }
- 
+    
+  
 @media print {
     body {
         -webkit-print-color-adjust: exact;

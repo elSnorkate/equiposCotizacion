@@ -15,6 +15,10 @@
     <div class="form">
       <form action="pdf.html" method="GET" target="_blank">
         <div class="input_field">
+          <label for="numeroInput">N° Cotización:</label>
+          <input type="text" class="input" name="numeroInput" id="numeroInput" maxlength="4">
+        </div>
+        <div class="input_field">
           <label>RUC :</label>
           <input type="text" class="input" name="rucInput" id="rucInput" maxlength="11">
         </div>
@@ -47,56 +51,55 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-<script>
-function addNewItem() {
-  var itemContainer = document.getElementById('itemContainer');
-  var itemCount = itemContainer.childElementCount + 1;
+  <script>
+    function addNewItem() {
+      var itemContainer = document.getElementById('itemContainer');
+      var itemCount = itemContainer.childElementCount + 1;
 
-  var newItemDiv = document.createElement('div');
-  newItemDiv.className = 'input_field';
+      var newItemDiv = document.createElement('div');
+      newItemDiv.className = 'input_field';
 
-  var conceptLabel = document.createElement('label');
-  conceptLabel.textContent = 'Concepto';
+      var conceptLabel = document.createElement('label');
+      conceptLabel.textContent = 'Concepto';
 
-  var conceptInput = document.createElement('input');
-  conceptInput.type = 'text';
-  conceptInput.className = 'input';
-  conceptInput.name = 'conceptos_' + itemCount;
-  conceptInput.id = 'conceptos_' + itemCount;
+      var conceptInput = document.createElement('input');
+      conceptInput.type = 'text';
+      conceptInput.className = 'input';
+      conceptInput.name = 'conceptos_' + itemCount;
+      conceptInput.id = 'conceptos_' + itemCount;
 
-  var priceLabel = document.createElement('label');
-  priceLabel.textContent = '...Precio';
+      var priceLabel = document.createElement('label');
+      priceLabel.textContent = '...Precio';
 
-  var priceInput = document.createElement('input');
-  priceInput.type = 'number';
-  priceInput.min = '1';
-  priceInput.step = 'any';
-  priceInput.className = 'input';
-  priceInput.name = 'precio' + itemCount;
-  priceInput.id = 'precio' + itemCount;
+      var priceInput = document.createElement('input');
+      priceInput.type = 'number';
+      priceInput.min = '1';
+      priceInput.step = 'any';
+      priceInput.className = 'input';
+      priceInput.name = 'precio' + itemCount;
+      priceInput.id = 'precio' + itemCount;
 
-  var deleteButton = document.createElement('button');
-  deleteButton.type = 'button';
-  deleteButton.textContent =  '🗑️';
-  deleteButton.onclick = function() {
-    // Call the deleteItem function passing the itemDiv to be removed
-    deleteItem(newItemDiv);
-  };
+      var deleteButton = document.createElement('button');
+      deleteButton.type = 'button';
+      deleteButton.textContent =  '🗑️';
+      deleteButton.onclick = function() {
+        // Call the deleteItem function passing the itemDiv to be removed
+        deleteItem(newItemDiv);
+      };
 
-  newItemDiv.appendChild(conceptLabel);
-  newItemDiv.appendChild(conceptInput);
-  newItemDiv.appendChild(priceLabel);
-  newItemDiv.appendChild(priceInput);
-  newItemDiv.appendChild(deleteButton);
+      newItemDiv.appendChild(conceptLabel);
+      newItemDiv.appendChild(conceptInput);
+      newItemDiv.appendChild(priceLabel);
+      newItemDiv.appendChild(priceInput);
+      newItemDiv.appendChild(deleteButton);
 
-  itemContainer.appendChild(newItemDiv);
-}
+      itemContainer.appendChild(newItemDiv);
+    }
 
-function deleteItem(itemDiv) {
-  var itemContainer = document.getElementById('itemContainer');
-  itemContainer.removeChild(itemDiv);
-}
-  
-</script>
+    function deleteItem(itemDiv) {
+      var itemContainer = document.getElementById('itemContainer');
+      itemContainer.removeChild(itemDiv);
+    }
+  </script>
 </body>
 </html>
