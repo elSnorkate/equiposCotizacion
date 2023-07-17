@@ -157,9 +157,19 @@
         symbol.style.opacity = '0.6';
       }
     }
-
-    // Call the function to apply styles to all symbols
     replacePlusSymbols();
+
+      function replacePlusWithSpaces() {
+      var textNodes = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+      var node;
+
+      while (node = textNodes.nextNode()) {
+    node.nodeValue = node.nodeValue.replace(/\+/g, ' ');
+  }
+}
+
+window.onload = function() {
+  replacePlusWithSpaces();
+};
+
   </script>
-</body>
-</html>
